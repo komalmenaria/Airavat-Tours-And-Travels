@@ -1,22 +1,31 @@
-import React , { useState }  from "react";
+import React, { useState } from "react";
 import Logo from "../img/Logo.svg";
 import NavIcon from "../img/navIcon.svg";
 import CrossIcon from "../img/crossIcon.svg";
-import {Link}  from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 function Header() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [navbar, setNavbar] = useState(false);
 
-  const [isMobile , setIsMobile] = useState(false);
+  const changeBackground = () => {
+    if (window.scrollY >= 80) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+  window.addEventListener("scroll", changeBackground);
+
   return (
     <>
-      <nav className="navbar">
-       
-          <img src={Logo} alt="Airavat Tour and Travel"  className="logo-div"/>
-       
+      <nav className={navbar ? 'navbar active' : 'navbar'}>
+        <img src={Logo} alt="Airavat Tour and Travel" className="logo-div" />
 
-        <ul className={isMobile ? "nav-links-mobile" : "nav-links"}
-        
-        onClick={() => setIsMobile(false)}>
+        <ul
+          className={isMobile ? "nav-links-mobile" : "nav-links"}
+          onClick={() => setIsMobile(false)}
+        >
           <Link to="/" className="home">
             <li>Home</li>
           </Link>
@@ -33,9 +42,12 @@ function Header() {
             <li>Call Us</li>
           </a>
         </ul>
-       <div className="mobile-menu-icon" onClick={() => setIsMobile(!isMobile)}>
-         {isMobile ? <img src={CrossIcon} /> : <img src={NavIcon} /> }
-       </div>
+        <div
+          className="mobile-menu-icon"
+          onClick={() => setIsMobile(!isMobile)}
+        >
+          {isMobile ? <img src={CrossIcon} /> : <img src={NavIcon} />}
+        </div>
       </nav>
     </>
   );
